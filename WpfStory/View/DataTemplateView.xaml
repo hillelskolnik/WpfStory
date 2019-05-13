@@ -1,0 +1,50 @@
+﻿<Window x:Class="WpfStory.View.DataTemplateView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfStory.View"
+        mc:Ignorable="d"
+        xmlns:vm ="clr-namespace:WpfStory.ViewModel"
+        xmlns:data="clr-namespace:WpfStory.Data.Shapse"
+        Title="DataTemplateView" Height="450" Width="502.027">
+    <Window.Resources>
+        <vm:DataTemplateViewVM x:Key="vmDt"/>
+    </Window.Resources>
+    
+    <Grid DataContext="{StaticResource vmDt}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>            
+        </Grid.RowDefinitions>
+
+        <ListBox x:Name="shapesList" ItemsSource="{Binding Shapes}" Grid.IsSharedSizeScope="True"
+                 HorizontalContentAlignment="Stretch"
+                 Grid.RowSpan="2"
+                 SelectedIndex="{Binding SelectedIndex}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <ContentControl>
+                        <local:ShapeCtrl/>
+                    </ContentControl>                    
+                </DataTemplate>                
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <local:ShapeCtrl 
+            DataContext="{Binding Source={x:Reference shapesList},
+            Path=SelectedItem}"
+            Grid.Column="1"
+            Margin="10"/>
+        <local:ShapeEditCtrl 
+            DataContext="{Binding Source={x:Reference shapesList},
+            Path=SelectedItem}"
+            Grid.Column="1"
+            Grid.Row="1"
+            Margin="10"/>
+    </Grid>
+</Window>

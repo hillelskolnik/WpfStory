@@ -1,0 +1,79 @@
+﻿<UserControl x:Class="WpfStory.View.ShapeCtrl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfStory.View"
+             mc:Ignorable="d" 
+             xmlns:data="clr-namespace:WpfStory.Data.Shapse"
+             d:DesignHeight="100" d:DesignWidth="100">
+    <UserControl.Resources>
+        <DataTemplate x:Key="CircleDataTemplate">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Ellipse Fill="{Binding Fill}" 
+                         Stroke="{Binding Stroke}"
+                         StrokeThickness="{Binding StrokeThickness}"
+                         Height="{Binding Diameter}"
+                         Width="{Binding Diameter}"
+                         HorizontalAlignment="Left"/>
+                <WrapPanel Grid.Row="1">
+                    <TextBlock>Area:</TextBlock>
+                    <TextBlock Text="{Binding Area, StringFormat=N1}"/>
+                </WrapPanel>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="SquareDataTemplate">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Rectangle Fill="{Binding Fill}" 
+                         Stroke="{Binding Stroke}"
+                         StrokeThickness="{Binding StrokeThickness}"
+                         Height="{Binding HightWidth}"
+                         Width="{Binding HightWidth}"
+                         HorizontalAlignment="Left"/>
+                <WrapPanel Grid.Row="1">
+                    <TextBlock>Area:</TextBlock>
+                    <TextBlock Text="{Binding Area, StringFormat=N1}"/>
+                </WrapPanel>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="TriangleDataTemplate">
+            <Grid HorizontalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Polygon Fill="{Binding Fill}" 
+                         Stroke="{Binding Stroke}"
+                         StrokeThickness="{Binding StrokeThickness}"
+                         Height="{Binding Hight}"
+                         Width="{Binding Width}"
+                         Points="{Binding Points}"
+                         HorizontalAlignment="Left"/>
+                <WrapPanel Grid.Row="1">
+                    <TextBlock>Area:</TextBlock>
+                    <TextBlock Text="{Binding Area, StringFormat=N1}"/>
+                </WrapPanel>
+            </Grid>
+        </DataTemplate>
+
+        <data:ShapesDataTemplateSelector x:Key="shapeSelector"
+                                         CircleDataTemplate="{StaticResource CircleDataTemplate}"
+                                         SquareDataTemplate="{StaticResource SquareDataTemplate}"
+                                         TriangleDataTemplate="{StaticResource TriangleDataTemplate}"/>
+
+    </UserControl.Resources>
+    <Grid>
+        <ContentPresenter ContentTemplateSelector="{StaticResource shapeSelector}"
+                        Content="{Binding}"/>
+    </Grid>
+</UserControl>
